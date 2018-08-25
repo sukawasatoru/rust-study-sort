@@ -20,6 +20,8 @@ fn main() {
 
 fn insertion_sort(src: &mut [i32]) {
     for i in 1..src.len() {
+        debug!("{:?}", src);
+
         if src[i - 1] < src[i] {
             continue;
         }
@@ -34,6 +36,7 @@ fn insertion_sort(src: &mut [i32]) {
                 break;
             }
         }
+        debug!("insert {}", tmp);
         src[j] = tmp;
     }
 }
