@@ -18,13 +18,13 @@ fn main() {
     info!("Bye");
 }
 
-fn selection_sort(src: &mut Vec<i32>) {
-    let len = src.len();
-    for i in 0..(len - 1) {
-        debug!("i: {}, data: {:?}", i, src);
+fn selection_sort(src: &mut [i32]) {
+    let right = src.len() - 1;
+    for i in 0..right {
+        debug!("{:?}", src);
 
         let mut min_index = i;
-        for j in (i + 1)..(len - 1) {
+        for j in i..right {
             if src[j] < src[min_index] {
                 min_index = j;
             }
