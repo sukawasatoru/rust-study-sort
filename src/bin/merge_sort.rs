@@ -18,7 +18,7 @@ fn main() {
     info!("Bye");
 }
 
-fn merge_sort(src: &mut Vec<i32>) {
+fn merge_sort(src: &mut [i32]) {
     let merge = |left: &[i32], right: &[i32]| -> Vec<i32> {
         let mut result: Vec<i32> = Vec::with_capacity(left.len() + right.len());
         let mut left_index = 0;
@@ -66,15 +66,12 @@ fn merge_sort(src: &mut Vec<i32>) {
             let left: Vec<i32> = (step1.f)(step1, a.0);
             let right: Vec<i32> = (step1.f)(step1, a.1);
             debug!("prepare_and_merge left: {:?}, right: {:?}", left, right);
-            merge(left.as_slice(), right.as_slice())
+            merge(&left, &right)
         }
     };
 
-    for (i, val) in
-        ((prepare_and_merge.f)(&prepare_and_merge, src.as_slice()) as Vec<i32>).iter()
-            .enumerate() {
-        src[i] = *val;
-    }
+    let merged = (prepare_and_merge.f)(&prepare_and_merge, src);
+    src.copy_from_slice(&merged);
 }
 
 #[test]
