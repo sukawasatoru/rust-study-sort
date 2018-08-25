@@ -18,17 +18,15 @@ fn main() {
     info!("Bye");
 }
 
-fn bubble_sort(src: &mut Vec<i32>) {
-    let len = src.len();
-    for i in 0..(len - 1) {
-        debug!("i: {}, data: {:?}", i, src);
-        for j in (i + 1)..(len - 1) {
-            debug!("i: {}, j: {}, data: {:?}", i, j, src);
+fn bubble_sort(src: &mut [i32]) {
+    let right = src.len() - 1;
+    for i in 0..right {
+        debug!("{:?}", src);
+        for j in 1..(right - i) {
+            if src[j] < src[j - 1] {
+                debug!("swap {}, {}", src[j - 1], src[j]);
 
-            if src[j] < src[i] {
-                debug!("swap {}, {}", src[i], src[j]);
-
-                src.swap(i, j);
+                src.swap(j - 1, j);
             }
         }
     }
