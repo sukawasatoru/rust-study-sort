@@ -91,7 +91,18 @@ fn down_heap(src: &mut [i32], index: usize) {
 
 #[test]
 fn test_heap_sort() {
+    use rust_study_sort::testdata::testdata::get_list2;
+    use rust_study_sort::testdata::testdata::get_list3;
+
     let mut data = get_list1();
     heap_sort(&mut data.data);
     assert!(data.data == data.expect, format!("{:?}", data.data));
+
+    let mut data2 = get_list2();
+    heap_sort(&mut data2.data);
+    assert!(data2.data == data2.expect, format!("{:?}", data2.data));
+
+    let mut data3 = get_list3();
+    heap_sort(&mut data3.data);
+    assert!(data3.data == data3.expect, format!("{:?}", data3.data));
 }

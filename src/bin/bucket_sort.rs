@@ -4,8 +4,6 @@ extern crate log;
 extern crate rust_study_sort;
 
 use rust_study_sort::testdata::testdata::get_list1u;
-use rust_study_sort::testdata::testdata::get_list2u;
-use rust_study_sort::testdata::testdata::get_list3u;
 
 fn main() {
     env_logger::init();
@@ -50,6 +48,9 @@ fn max(src: &[u32]) -> u32 {
 
 #[test]
 fn test_bucket_sort() {
+    use rust_study_sort::testdata::testdata::get_list2u;
+    use rust_study_sort::testdata::testdata::get_list3u;
+
     let mut data = get_list1u();
     bucket_sort(&mut data.data);
     assert!(data.data == data.expect, format!("{:?}", data.data));
