@@ -25,20 +25,17 @@ fn quick_sort(src: &mut Vec<i32>) {
 }
 
 fn sort(src: &mut [i32], left: usize, right: usize) {
-    if right <= left {
-        return;
-    }
-
     // left          right
     //   |               |
     // - - - - - - - - - -
     //         |
     //   (right - left) / 2
     let pivot = med3(src[left], src[left + (right - left) / 2], src[right]);
-
     let mut left_index = left;
     let mut right_index = right;
     loop {
+        debug!("data: {:?}, left_index: {}, right_index: {}", src, left_index, right_index);
+
         while src[left_index] < pivot {
             left_index += 1;
         }
@@ -47,16 +44,29 @@ fn sort(src: &mut [i32], left: usize, right: usize) {
             right_index -= 1;
         }
 
-        if right_index <= left_index {
+        if left_index <= right_index {
+            debug!("swap {}, {}", src[left_index], src[right_index]);
+            src.swap(left_index, right_index);
+            if left_index < right {
+                left_index += 1;
+            }
+
+            if left < right_index {
+                right_index -= 1;
+            }
+        } else {
             break;
         }
+    }
 
-        src.swap(left_index, right_index);
-        left_index += 1;
-        right_index -= 1;
+    if left < right_index && 0 < right_index - left {
+        debug!("recursive left: {}, {}", left, right_index);
+        sort(src, left, right_index);
+    }
 
-        sort(src, left, left_index - 1);
-        sort(src, right_index, right);
+    if left_index < right && 0 < right - left_index {
+        debug!("recursive right: {}, {}", left_index, right);
+        sort(src, left_index, right);
     }
 }
 
@@ -95,7 +105,18 @@ fn test_mid3() {
 
 #[test]
 fn test_quick_sort() {
+    use rust_study_sort::testdata::testdata::get_list2;
+    use rust_study_sort::testdata::testdata::get_list3;
+
     let mut data = get_list1();
     quick_sort(&mut data.data);
     assert!(data.data == data.expect, format!("{:?}", data.data));
+
+    let mut data2 = get_list2();
+    quick_sort(&mut data2.data);
+    assert!(data2.data == data2.expect, format!("{:?}", data2.data));
+
+    let mut data3 = get_list3();
+    quick_sort(&mut data3.data);
+    assert!(data3.data == data3.expect, format!("{:?}", data3.data));
 }
